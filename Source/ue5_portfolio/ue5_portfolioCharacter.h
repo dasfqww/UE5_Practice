@@ -86,6 +86,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void AttackEnd();
+
+	bool CanAttack();
 	/** Handler for when a touch input begins. */
 	//void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 

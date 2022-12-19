@@ -118,7 +118,7 @@ void Aue5_portfolioCharacter::InteractKeyPressed()
 
 void Aue5_portfolioCharacter::Attack()
 {
-	if(ActionState==EActionState::EAS_Unoccupied)
+	if(CanAttack())
 	{
 		PlayAttackMontage();
 		ActionState = EActionState::EAS_Attacking;
@@ -152,8 +152,16 @@ void Aue5_portfolioCharacter::AttackEnd()
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
+bool Aue5_portfolioCharacter::CanAttack()
+{
+	return ActionState == EActionState::EAS_Unoccupied &&
+		CharacterState != ECharacterState::ECS_Unequipped;
+}
+
 void Aue5_portfolioCharacter::MoveForward(float Value)
 {
+	if (ActionState == EActionState::EAS_Attacking) return;
+
 	if ((Controller != nullptr) && (Value != 0.0f))
 	{
 		// find out which way is forward
@@ -168,6 +176,8 @@ void Aue5_portfolioCharacter::MoveForward(float Value)
 
 void Aue5_portfolioCharacter::MoveRight(float Value)
 {
+	if (ActionState == EActionState::EAS_Attacking) return;
+
 	if ( (Controller != nullptr) && (Value != 0.0f) )
 	{
 		// find out which way is right
