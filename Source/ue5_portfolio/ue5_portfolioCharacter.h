@@ -48,8 +48,14 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AItem* overlappingItem;
 
+	UPROPERTY(VisibleAnywhere, Category=Weapon)
+	class AWeapon* EquippedWeapon;
+
 	UPROPERTY(EditDefaultsOnly, Category=Montages)
 	class UAnimMontage* attackMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	class UAnimMontage* EquipMontage;
 
 public:
 	Aue5_portfolioCharacter();
@@ -88,6 +94,20 @@ protected:
 	void AttackEnd();
 
 	bool CanAttack();
+
+	bool CanDisarm();
+	bool CanArm();
+
+	void PlayEquipMontage(FName SectionName);
+
+	UFUNCTION(BlueprintCallable)
+	void Disarm();
+
+	UFUNCTION(BlueprintCallable)
+	void Arm();
+
+	UFUNCTION(BlueprintCallable)
+	void FinishEquipping();
 	/** Handler for when a touch input begins. */
 	//void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 

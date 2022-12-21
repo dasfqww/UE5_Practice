@@ -113,6 +113,25 @@ void Aue5_portfolioCharacter::InteractKeyPressed()
 	{
 		overlappingWeapon->Equip(GetMesh(), FName("RightHandSocket"));
 		CharacterState = ECharacterState::ECS_EquippedTwoHandedWeapon;
+		overlappingItem = nullptr;
+		EquippedWeapon = overlappingWeapon;
+	}
+
+	else
+	{
+		if (CanDisarm())
+		{
+			PlayEquipMontage(FName("Unequip"));
+			CharacterState = ECharacterState::ECS_Unequipped;
+			ActionState = EActionState::EAS_EquippingWeapon;
+		}
+
+		else if (CanArm())
+		{
+			PlayEquipMontage(FName("Equip"));
+			CharacterState = ECharacterState::ECS_EquippedTwoHandedWeapon;
+			ActionState = EActionState::EAS_EquippingWeapon;
+		}
 	}
 }
 
@@ -158,9 +177,52 @@ bool Aue5_portfolioCharacter::CanAttack()
 		CharacterState != ECharacterState::ECS_Unequipped;
 }
 
+bool Aue5_portfolioCharacter::CanDisarm()
+{
+	return ActionState == EActionState::EAS_Unoccupied &&
+		CharacterState != ECharacterState::ECS_Unequipped;
+}
+
+bool Aue5_portfolioCharacter::CanArm()
+{
+	return ActionState == EActionState::EAS_Unoccupied&&
+		CharacterState == ECharacterState::ECS_Unequipped&&EquippedWeapon;
+}
+
+void Aue5_portfolioCharacter::PlayEquipMontage(FName SectionName)
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance&&EquipMontage)
+	{
+		AnimInstance->Montage_Play(EquipMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, EquipMontage);
+	}
+}
+
+void Aue5_portfolioCharacter::Disarm()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->AttachMeshToSocket(GetMesh(), FName("SpineSocket"));
+	}
+}
+
+void Aue5_portfolioCharacter::Arm()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->AttachMeshToSocket(GetMesh(), FName("RightHandSocket"));
+	}
+}
+
+void Aue5_portfolioCharacter::FinishEquipping()
+{
+	ActionState = EActionState::EAS_Unoccupied;
+}
+
 void Aue5_portfolioCharacter::MoveForward(float Value)
 {
-	if (ActionState == EActionState::EAS_Attacking) return;
+	if (ActionState != EActionState::EAS_Unoccupied) return;
 
 	if ((Controller != nullptr) && (Value != 0.0f))
 	{
@@ -176,7 +238,7 @@ void Aue5_portfolioCharacter::MoveForward(float Value)
 
 void Aue5_portfolioCharacter::MoveRight(float Value)
 {
-	if (ActionState == EActionState::EAS_Attacking) return;
+	if (ActionState != EActionState::EAS_Unoccupied) return;
 
 	if ( (Controller != nullptr) && (Value != 0.0f) )
 	{
