@@ -7,12 +7,13 @@
 #include "Components/SphereComponent.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Interfaces/HitInterface.h"
 
 AWeapon::AWeapon()
 {
 	WeaponBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Weapon Box"));
 	WeaponBox->SetupAttachment(GetRootComponent());
-	WeaponBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	WeaponBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	WeaponBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	WeaponBox->SetCollisionResponseToChannel
 		(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
@@ -23,8 +24,11 @@ AWeapon::AWeapon()
 	BoxTraceEnd->SetupAttachment(GetRootComponent());
 }
 
-void AWeapon::Equip(USceneComponent* InParent, FName InSocketName)
+void AWeapon::Equip(USceneComponent* InParent, FName InSocketName, 
+	AActor* newOwner, APawn* newInstigator)
 {
+	SetOwner(newOwner);
+	SetInstigator(newInstigator);
 	AttachMeshToSocket(InParent, InSocketName);
 	ItemState = EItemState::EIS_Equipped;
 	if (EquipSound)
@@ -77,12 +81,35 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
+
+	for (AActor* Actor:ignoreActors)
+	{
+		ActorsToIgnore.AddUnique(Actor);
+	}
+
 	FHitResult BoxHit;
 
 	UKismetSystemLibrary::BoxTraceSingle(
 		this, Start, End, FVector(5.f, 5.f, 5.f), 
 		BoxTraceStart->GetComponentRotation(), 
 		ETraceTypeQuery::TraceTypeQuery1,
-		false, ActorsToIgnore,EDrawDebugTrace::ForDuration, 
+		false, ActorsToIgnore,EDrawDebugTrace::None, 
 		BoxHit,true);
+
+	if(BoxHit.GetActor())
+	{
+		UGameplayStatics::ApplyDamage(BoxHit.GetActor(), Damage,
+			GetInstigator()->GetController(), 
+			this, UDamageType::StaticClass());
+
+		IHitInterface* HitInterface = Cast<IHitInterface>(BoxHit.GetActor());
+		if (HitInterface)
+		{
+			HitInterface->Execute_GetHit(BoxHit.GetActor(), BoxHit.ImpactPoint);
+		}
+		ignoreActors.AddUnique(BoxHit.GetActor());
+
+		CreateFields(BoxHit.ImpactPoint);
+		
+	}
 }

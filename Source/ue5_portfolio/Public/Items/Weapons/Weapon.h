@@ -6,6 +6,10 @@
 #include "Items/Item.h"
 #include "Weapon.generated.h"
 
+class USoundBase;
+class UBoxComponent;
+class USceneComponent;
+
 /**
  * 
  */
@@ -15,8 +19,11 @@ class UE5_PORTFOLIO_API AWeapon : public AItem
 	GENERATED_BODY()
 public:
 	AWeapon();
-	void Equip(USceneComponent* InParent, FName InSocketName);
+	void Equip(USceneComponent* InParent, FName InSocketName, 
+		AActor* newOwner, APawn* newInstigator);
 	void AttachMeshToSocket(USceneComponent* InParent, const FName& InSocketName);
+
+	TArray<AActor*> ignoreActors;
 protected:
 	virtual void BeginPlay() override;
 
@@ -32,16 +39,23 @@ protected:
 		AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateFields(const FVector& fieldLocation);
 private:
 	UPROPERTY(EditAnywhere, Category="Weapon Properties")
-	class USoundBase* EquipSound;
+	USoundBase* EquipSound;
 
 	UPROPERTY(VisibleAnywhere, Category="WeaponProperties")
-	class UBoxComponent* WeaponBox;
+	UBoxComponent* WeaponBox;
 
 	UPROPERTY(VisibleAnywhere)
-	class USceneComponent* BoxTraceStart;
+	USceneComponent* BoxTraceStart;
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BoxTraceEnd;
+
+	UPROPERTY(EditAnywhere, Category = "WeaponProperties")
+	float Damage = 25.f;
+public:
+	FORCEINLINE UBoxComponent* GetWeaponBox() const { return WeaponBox; }
 };

@@ -7,6 +7,12 @@
 #include "CharacterTypes.h"
 #include "ue5_portfolioCharacter.generated.h"
 
+class UParticleSystem;
+class UBoxComponent;
+class AItem;
+class AWeapon;
+class UAnimMontage;
+
 UCLASS(config=Game)
 class Aue5_portfolioCharacter : public ACharacter
 {
@@ -22,12 +28,6 @@ private:
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat, meta = (AllowPrivateAccess = "true"))
-	float MaxHp;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat, meta = (AllowPrivateAccess = "true"))
-	float CurrentHp;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -40,22 +40,26 @@ private:
 	float Range;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	class UParticleSystem *Effect;
+	UParticleSystem *Effect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* BoxCollision;
+	UBoxComponent* BoxCollision;
 
 	UPROPERTY(VisibleInstanceOnly)
-	class AItem* overlappingItem;
+	AItem* overlappingItem;
 
 	UPROPERTY(VisibleAnywhere, Category=Weapon)
-	class AWeapon* EquippedWeapon;
+	AWeapon* EquippedWeapon;
 
 	UPROPERTY(EditDefaultsOnly, Category=Montages)
-	class UAnimMontage* attackMontage;
+	UAnimMontage* attackMontage;
 
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	class UAnimMontage* EquipMontage;
+	UAnimMontage* EquipMontage;
+
+	bool bCanNextAttack=false;
+
+	int comboCount=0;
 
 public:
 	Aue5_portfolioCharacter();
@@ -64,6 +68,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollisionEnabled(ECollisionEnabled::Type collisionEnabled);
 protected:
 
 	/** Called for forwards/backward input */
@@ -91,6 +97,9 @@ protected:
 	void PlayAttackMontage();
 
 	UFUNCTION(BlueprintCallable)
+	void AttackInputChecking();
+
+	UFUNCTION(BlueprintCallable)
 	void AttackEnd();
 
 	bool CanAttack();
@@ -98,7 +107,7 @@ protected:
 	bool CanDisarm();
 	bool CanArm();
 
-	void PlayEquipMontage(FName SectionName);
+	void PlayEquipMontage(const FName& SectionName);
 
 	UFUNCTION(BlueprintCallable)
 	void Disarm();
@@ -125,8 +134,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	FORCEINLINE float GetMaxHp()const { return MaxHp; }
-	FORCEINLINE void SetMaxHp(float maxhp) { MaxHp = maxhp; }
 	FORCEINLINE float GetDamage()const { return Damage; }
 	FORCEINLINE void SetOverlappingItem(AItem* item) { overlappingItem = item; }
 };

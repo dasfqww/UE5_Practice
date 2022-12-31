@@ -10,6 +10,7 @@
 #include "Items/Item.h"
 #include "Items/Weapons/Weapon.h"
 #include "Animation/AnimMontage.h"
+#include "Components/BoxComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Aue5_portfolioCharacter
@@ -22,7 +23,7 @@ Aue5_portfolioCharacter::Aue5_portfolioCharacter()
 
 	// set our turn rate for input
 	TurnRateGamepad = 50.f;
-
+	
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -111,7 +112,10 @@ void Aue5_portfolioCharacter::InteractKeyPressed()
 	AWeapon* overlappingWeapon = Cast<AWeapon>(overlappingItem);
 	if (overlappingWeapon)
 	{
-		overlappingWeapon->Equip(GetMesh(), FName("RightHandSocket"));
+		overlappingWeapon->Equip(GetMesh(), FName("RightHandSocket"),
+			this, this);
+		overlappingWeapon->SetOwner(this);
+		overlappingWeapon->SetInstigator(this);
 		CharacterState = ECharacterState::ECS_EquippedTwoHandedWeapon;
 		overlappingItem = nullptr;
 		EquippedWeapon = overlappingWeapon;
@@ -142,16 +146,34 @@ void Aue5_portfolioCharacter::Attack()
 		PlayAttackMontage();
 		ActionState = EActionState::EAS_Attacking;
 	}
-	
+
+	if (ActionState==EActionState::EAS_Attacking)
+	{
+		bCanNextAttack = true;
+	}
 }
 
 void Aue5_portfolioCharacter::PlayAttackMontage()
 {
+	
+
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (AnimInstance && attackMontage)
 	{
-		AnimInstance->Montage_Play(attackMontage);
-		int32 Selection = FMath::RandRange(0, 1);
+		//AnimInstance->Montage_Play(attackMontage);
+		const char* sectionList[] = { "Attack", "Attack2", "Attack3" };
+
+		if (!(AnimInstance->Montage_IsPlaying(attackMontage)))
+		{
+			AnimInstance->Montage_Play(attackMontage);
+		}
+
+		else if (AnimInstance->Montage_IsPlaying(attackMontage))
+		{
+			AnimInstance->Montage_Play(attackMontage);
+			AnimInstance->Montage_JumpToSection(FName(sectionList[comboCount]), attackMontage);
+		}
+		/*int32 Selection = FMath::RandRange(0, 1);
 		FName SectionName = FName();
 		switch (Selection)
 		{
@@ -162,13 +184,29 @@ void Aue5_portfolioCharacter::PlayAttackMontage()
 			SectionName = FName("Attack2");
 			break;
 		}
-		AnimInstance->Montage_JumpToSection(SectionName, attackMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, attackMontage);*/
+	}
+}
+
+void Aue5_portfolioCharacter::AttackInputChecking()
+{
+	if (comboCount>=2)
+	{
+		comboCount = 0;
+	}
+
+	if (bCanNextAttack)
+	{
+		comboCount++;
+		bCanNextAttack = false;
+		PlayAttackMontage();
 	}
 }
 
 void Aue5_portfolioCharacter::AttackEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
+	comboCount = 0;
 }
 
 bool Aue5_portfolioCharacter::CanAttack()
@@ -189,7 +227,7 @@ bool Aue5_portfolioCharacter::CanArm()
 		CharacterState == ECharacterState::ECS_Unequipped&&EquippedWeapon;
 }
 
-void Aue5_portfolioCharacter::PlayEquipMontage(FName SectionName)
+void Aue5_portfolioCharacter::PlayEquipMontage(const FName& SectionName)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance&&EquipMontage)
@@ -218,6 +256,15 @@ void Aue5_portfolioCharacter::Arm()
 void Aue5_portfolioCharacter::FinishEquipping()
 {
 	ActionState = EActionState::EAS_Unoccupied;
+}
+
+void Aue5_portfolioCharacter::SetWeaponCollisionEnabled(ECollisionEnabled::Type collisionEnabled)
+{
+	if (EquippedWeapon&&EquippedWeapon->GetWeaponBox())
+	{
+		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(collisionEnabled);
+		EquippedWeapon->ignoreActors.Empty();
+	}
 }
 
 void Aue5_portfolioCharacter::MoveForward(float Value)
