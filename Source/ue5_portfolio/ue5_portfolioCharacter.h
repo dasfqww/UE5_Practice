@@ -3,41 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
 #include "CharacterTypes.h"
+#include "Characters/BaseCharacter.h"
 #include "ue5_portfolioCharacter.generated.h"
 
 class UParticleSystem;
 class UBoxComponent;
 class AItem;
-class AWeapon;
 class UAnimMontage;
 
 UCLASS(config=Game)
-class Aue5_portfolioCharacter : public ACharacter
+class Aue5_portfolioCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
 private:
 
-	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
-
-	UPROPERTY(BlueprintReadWrite, meta=(AllowPrivateAccess="true"))
-	EActionState ActionState = EActionState::EAS_Unoccupied;
-
-	/** Camera boom positioning the camera behind the character */
+	
+	/** Character components*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= Combat, meta=(AllowPrivateAccess="true"))
-	float Damage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	float Range;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UParticleSystem *Effect;
@@ -48,14 +37,14 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	AItem* overlappingItem;
 
-	UPROPERTY(VisibleAnywhere, Category=Weapon)
-	AWeapon* EquippedWeapon;
-
-	UPROPERTY(EditDefaultsOnly, Category=Montages)
-	UAnimMontage* attackMontage;
-
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	UAnimMontage* EquipMontage;
+
+	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		EActionState ActionState = EActionState::EAS_Unoccupied;
+
 
 	bool bCanNextAttack=false;
 
@@ -64,68 +53,57 @@ private:
 public:
 	Aue5_portfolioCharacter();
 
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
-	float TurnRateGamepad;
-
-	UFUNCTION(BlueprintCallable)
-	void SetWeaponCollisionEnabled(ECollisionEnabled::Type collisionEnabled);
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* Hitter) override;
+	
 protected:
-
-	/** Called for forwards/backward input */
+	virtual void BeginPlay() override;
+	
+	virtual void Tick(float DeltaSeconds) override;
+	/** Callbacks for input */
 	void MoveForward(float Value);
-
-	/** Called for side to side input */
 	void MoveRight(float Value);
-
-	/** 
-	 * Called via input to turn at a given rate. 
-	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	 */
-	void TurnAtRate(float Rate);
-
-	/**
-	 * Called via input to turn look up/down at a given rate. 
-	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
-	 */
-	void LookUpAtRate(float Rate);
-
 	void InteractKeyPressed();
+	virtual void Attack() override;
 
-	void Attack();
+	//virtual void PlayAttackMontage() override;
 
-	void PlayAttackMontage();
+	void HitReaction();
+
+	void DefaultAttack();
 
 	UFUNCTION(BlueprintCallable)
 	void AttackInputChecking();
 
-	UFUNCTION(BlueprintCallable)
-	void AttackEnd();
-
-	bool CanAttack();
-
+	/*Combat*/
+	void EquipWeapon(AWeapon* Weapon);
+	virtual void AttackEnd() override;
+	virtual bool CanAttack() override;
 	bool CanDisarm();
 	bool CanArm();
-
+	void DisArm();
+	void Arm();
 	void PlayEquipMontage(const FName& SectionName);
 
 	UFUNCTION(BlueprintCallable)
-	void Disarm();
+	void AttachWeaponToBack();
 
 	UFUNCTION(BlueprintCallable)
-	void Arm();
+	void AttachWeaponToHand();
 
 	UFUNCTION(BlueprintCallable)
 	void FinishEquipping();
+
+	UFUNCTION(BlueprintCallable)
+	void HitReactEnd();
 	/** Handler for when a touch input begins. */
 	//void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
 	///** Handler for when a touch input stops. */
 	//void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-protected:
 	// APawn interface
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
 	// End of APawn interface
 
 public:
@@ -134,7 +112,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	FORCEINLINE float GetDamage()const { return Damage; }
 	FORCEINLINE void SetOverlappingItem(AItem* item) { overlappingItem = item; }
 };
 

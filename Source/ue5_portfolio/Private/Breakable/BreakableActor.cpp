@@ -27,7 +27,7 @@ ABreakableActor::ABreakableActor()
 		(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 }
 
-void ABreakableActor::GetHit_Implementation(const FVector& impactPoint)
+void ABreakableActor::GetHit_Implementation(const FVector& impactPoint, AActor* Hitter)
 {
 	UWorld* World = GetWorld();
 	if (World&&TreasureClasses.Num()>0)
