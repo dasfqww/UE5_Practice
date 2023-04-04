@@ -95,7 +95,7 @@ void Aue5_portfolioCharacter::GetHit_Implementation(const FVector& impactPoint, 
 {
 	UE_LOG(LogTemp, Warning, TEXT("Get hit..."));
 
-	HitReaction();
+	//HitReaction();
 
 	PlayHitSound(impactPoint);
 
