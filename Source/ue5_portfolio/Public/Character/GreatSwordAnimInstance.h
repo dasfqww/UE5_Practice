@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "ue5_portfolio/CharacterTypes.h"
+#include "Characters/CharacterTypes.h"
 #include "GreatSwordAnimInstance.generated.h"
 
 /**
@@ -30,6 +30,12 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category=Movement)
 	bool isFalling;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Movement | Character State")
+	UPROPERTY(BlueprintReadOnly, Category = Movement)
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+
+	UPROPERTY(BlueprintReadOnly, Category = Movement)
+	EActionState ActionState;
+	
+	UPROPERTY(BlueprintReadOnly, Category = Movement)
+	TEnumAsByte<EDeathPose> DeathPose;
 };

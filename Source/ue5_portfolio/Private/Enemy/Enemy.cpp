@@ -10,6 +10,7 @@
 #include "Components/AttributeComponent.h"
 #include "HUD/HealthBarComponent.h"
 #include "Perception/PawnSensingComponent.h"
+#include "Characters/CharacterTypes.h"
 
 AEnemy::AEnemy()
 {
@@ -104,8 +105,10 @@ void AEnemy::BeginPlay()
 void AEnemy::Die()
 {
 	isdead = true;
+	Super::Die();
+
 	EnemyState = EEnemyState::EES_Dead;
-	PlayDeathMontage();
+	
 	clearAttackTimer();
 	HideHealthBar();
 	DisableCapsule();
@@ -132,21 +135,8 @@ void AEnemy::HandleDamage(float DamageAmount)
 
 	if (Attributes && healthBarWidget)
 	{
-		healthBarWidget->SetHealthPercent(Attributes->GetHealthPercent());
+		healthBarWidget->SetHealthPercent(Attributes->GetHealthRatio());
 	}
-}
-
-int32 AEnemy::PlayDeathMontage()
-{
-	const int32 selection = Super::PlayDeathMontage();
-	TEnumAsByte<EDeathPose> Pose(selection);
-
-	if (Pose < EDeathPose::EDP_MAX)
-	{
-		DeathPose = Pose;
-	}
-
-	return selection;
 }
 
 void AEnemy::AttackEnd()

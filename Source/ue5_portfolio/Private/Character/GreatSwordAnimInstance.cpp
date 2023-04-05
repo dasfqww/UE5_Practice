@@ -26,5 +26,7 @@ void UGreatSwordAnimInstance::NativeUpdateAnimation(float DeltaTime)
 		GroundSpeed=UKismetMathLibrary::VSizeXY(playerMovement->Velocity);
 		isFalling=playerMovement->IsFalling();
 		CharacterState = player->GetCharacterState();
+		ActionState = player->GetActionState();
+		DeathPose = player->GetDeathPose();
 	}
 }

@@ -8,9 +8,12 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/AttributeComponent.h"
 #include "Items/Item.h"
 #include "Items/Weapons/Weapon.h"
 #include "Animation/AnimMontage.h"
+#include "HUD/PlayerHUD.h"
+#include "HUD/PlayerOverlay.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Aue5_portfolioCharacter
@@ -69,7 +72,7 @@ void Aue5_portfolioCharacter::SetupPlayerInputComponent(class UInputComponent* P
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &Aue5_portfolioCharacter::Jump);
 	PlayerInputComponent->BindAction("Interact", IE_Released, this, 
 		&Aue5_portfolioCharacter::InteractKeyPressed);
 	PlayerInputComponent->BindAction("Attack", IE_Released, this, 
@@ -91,18 +94,74 @@ void Aue5_portfolioCharacter::SetupPlayerInputComponent(class UInputComponent* P
 	PlayerInputComponent->BindTouch(IE_Released, this, &Aue5_portfolioCharacter::TouchStopped);*/
 }
 
+void Aue5_portfolioCharacter::Jump()
+{
+	if (IsUnoccupied())
+	{
+		Super::Jump();
+	}
+}
+
+bool Aue5_portfolioCharacter::IsUnoccupied()
+{
+	return ActionState == EActionState::EAS_Unoccupied;
+}
+
+float Aue5_portfolioCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	HandleDamage(DamageAmount);
+	SetHUDHealth();
+	return DamageAmount;
+}
+
 void Aue5_portfolioCharacter::GetHit_Implementation(const FVector& impactPoint, AActor* Hitter)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Get hit..."));
+	//UE_LOG(LogTemp, Warning, TEXT("Get hit..."));
 
 	//HitReaction();
 
-	PlayHitSound(impactPoint);
-
-	SpawnHitParticles(impactPoint);
+	Super::GetHit_Implementation(impactPoint, Hitter);
 
 	SetWeaponCollisionEnabled(ECollisionEnabled::NoCollision);
-	ActionState = EActionState::EAS_HitReaction;
+	if (Attributes&&Attributes->GetHealthRatio()>0.f)
+	{
+		ActionState = EActionState::EAS_HitReaction;
+	}
+}
+
+void Aue5_portfolioCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Tags.Add(FName("EngageableTarget"));
+
+	InitializePlayerOverlay();
+}
+
+void Aue5_portfolioCharacter::InitializePlayerOverlay()
+{
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
+	{
+		APlayerHUD* PlayerHUD = Cast<APlayerHUD>(PlayerController->GetHUD());
+		if (PlayerHUD)
+		{
+			PlayerOverlay = PlayerHUD->GetPlayerOverlay();
+			if (PlayerOverlay && Attributes)
+			{
+				PlayerOverlay->SetHealthBarRatio(Attributes->GetHealthRatio());
+				PlayerOverlay->SetManaBarRatio(1.f);
+			}
+		}
+	}
+}
+
+void Aue5_portfolioCharacter::SetHUDHealth()
+{
+	if (PlayerOverlay && Attributes)
+	{
+		PlayerOverlay->SetHealthBarRatio(Attributes->GetHealthRatio());
+	}
 }
 
 //void Aue5_portfolioCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
@@ -255,6 +314,14 @@ void Aue5_portfolioCharacter::PlayEquipMontage(const FName& SectionName)
 	}
 }
 
+void Aue5_portfolioCharacter::Die()
+{
+	Super::Die();
+
+	ActionState = EActionState::EAS_Dead;
+	DisableMeshCollision();
+}
+
 void Aue5_portfolioCharacter::AttachWeaponToBack()
 {
 	if (EquippedWeapon)
@@ -279,13 +346,6 @@ void Aue5_portfolioCharacter::FinishEquipping()
 void Aue5_portfolioCharacter::HitReactEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
-}
-
-void Aue5_portfolioCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-
-	Tags.Add(FName("EngageableTarget"));
 }
 
 void Aue5_portfolioCharacter::Tick(float DeltaSeconds)

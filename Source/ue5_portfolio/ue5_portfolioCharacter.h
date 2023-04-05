@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CharacterTypes.h"
+#include "Characters/CharacterTypes.h"
 #include "Characters/BaseCharacter.h"
 #include "ue5_portfolioCharacter.generated.h"
 
@@ -11,11 +11,22 @@ class UParticleSystem;
 class UBoxComponent;
 class AItem;
 class UAnimMontage;
+class UPlayerOverlay;
 
 UCLASS(config=Game)
 class Aue5_portfolioCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
+public:
+	Aue5_portfolioCharacter();
+
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void Jump() override;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator, AActor* DamageCauser) override;
+
+	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* Hitter) override;
 
 private:
 
@@ -43,22 +54,22 @@ private:
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		EActionState ActionState = EActionState::EAS_Unoccupied;
+	EActionState ActionState = EActionState::EAS_Unoccupied;
 
+	UPROPERTY()
+	UPlayerOverlay* PlayerOverlay;
 
 	bool bCanNextAttack=false;
 
 	int comboCount=0;
-
-public:
-	Aue5_portfolioCharacter();
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* Hitter) override;
 	
 protected:
 	virtual void BeginPlay() override;
-	
+
+	void InitializePlayerOverlay();
+	void SetHUDHealth();
+	bool IsUnoccupied();
+
 	virtual void Tick(float DeltaSeconds) override;
 	/** Callbacks for input */
 	void MoveForward(float Value);
@@ -84,6 +95,7 @@ protected:
 	void DisArm();
 	void Arm();
 	void PlayEquipMontage(const FName& SectionName);
+	virtual void Die() override;
 
 	UFUNCTION(BlueprintCallable)
 	void AttachWeaponToBack();
@@ -96,6 +108,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void HitReactEnd();
+	
 	/** Handler for when a touch input begins. */
 	//void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
@@ -108,6 +121,7 @@ protected:
 
 public:
 	FORCEINLINE ECharacterState GetCharacterState() const { return CharacterState; }
+	FORCEINLINE EActionState GetActionState() const { return ActionState; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/

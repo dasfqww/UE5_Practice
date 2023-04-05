@@ -28,7 +28,7 @@ void UAttributeComponent::ReceiveDamage(float damage)
 	health = FMath::Clamp(health-damage, 0.f, maxHealth);
 }
 
-float UAttributeComponent::GetHealthPercent()
+float UAttributeComponent::GetHealthRatio()
 {
 	return health / maxHealth;
 }
