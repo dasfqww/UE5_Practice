@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\ue5_portfolio.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\ue5_portfolio.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\ue5_portfolioEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Config\HoloLens">
+      <UniqueIdentifier>{4C8DD267-CDE7-336F-8602-F5F485D22BAB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\HoloLens\HoloLensEngine.ini">
+      <Filter>Config\HoloLens</Filter>
+    </None>
+    <Filter Include="Source\ue5_portfolio">
+      <UniqueIdentifier>{14781094-054A-3227-BFC0-E407EC81B5F3}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\DebugMacros.h">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\ue5_portfolio\ue5_portfolio.Build.cs">
+      <Filter>Source\ue5_portfolio</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\ue5_portfolio\ue5_portfolio.cpp">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ue5_portfolio\ue5_portfolio.h">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ue5_portfolio\ue5_portfolioCharacter.cpp">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ue5_portfolio\ue5_portfolioCharacter.h">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\ue5_portfolio\ue5_portfolioGameMode.cpp">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\ue5_portfolio\ue5_portfolioGameMode.h">
+      <Filter>Source\ue5_portfolio</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Private">
+      <UniqueIdentifier>{F89F6A2E-ACFA-366C-A6C3-94FAC05FD25A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ue5_portfolio\Private\AI">
+      <UniqueIdentifier>{4EF31626-FB34-3DBC-9DDA-69148D04CAED}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\AI\EnemyAIController.cpp">
+      <Filter>Source\ue5_portfolio\Private\AI</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Breakable">
+      <UniqueIdentifier>{7A43E04F-E76E-35D9-BB1C-3DCFC90D7D72}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Breakable\BreakableActor.cpp">
+      <Filter>Source\ue5_portfolio\Private\Breakable</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Character">
+      <UniqueIdentifier>{FFB2565E-97BB-3F21-AD34-F30B5AC201BA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Character\GreatSwordAnimInstance.cpp">
+      <Filter>Source\ue5_portfolio\Private\Character</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Characters">
+      <UniqueIdentifier>{BF898166-C71D-350F-AFBD-711752642FAC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Characters\BaseCharacter.cpp">
+      <Filter>Source\ue5_portfolio\Private\Characters</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Components">
+      <UniqueIdentifier>{ACF91E19-02C1-3E12-A247-AE112A8FE6C2}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Components\AttributeComponent.cpp">
+      <Filter>Source\ue5_portfolio\Private\Components</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Enemy">
+      <UniqueIdentifier>{3FD11453-B193-3AEF-913E-7246FD16B009}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Enemy\Enemy.cpp">
+      <Filter>Source\ue5_portfolio\Private\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Enemy\EnemyBoss.cpp">
+      <Filter>Source\ue5_portfolio\Private\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Enemy\GruxBase.cpp">
+      <Filter>Source\ue5_portfolio\Private\Enemy</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\HUD">
+      <UniqueIdentifier>{3F369032-BF05-3D74-A215-1A0D6BCE22C2}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\HUD\HealthBar.cpp">
+      <Filter>Source\ue5_portfolio\Private\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\HUD\HealthBarComponent.cpp">
+      <Filter>Source\ue5_portfolio\Private\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\HUD\PlayerHUD.cpp">
+      <Filter>Source\ue5_portfolio\Private\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\HUD\PlayerOverlay.cpp">
+      <Filter>Source\ue5_portfolio\Private\HUD</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Interfaces">
+      <UniqueIdentifier>{207D6582-3D8D-3FC2-8B7C-FF3308C84A62}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Interfaces\HitInterface.cpp">
+      <Filter>Source\ue5_portfolio\Private\Interfaces</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Items">
+      <UniqueIdentifier>{CE71A9B4-77C3-30EA-9868-A134AF539273}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Items\Item.cpp">
+      <Filter>Source\ue5_portfolio\Private\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Items\Treasure.cpp">
+      <Filter>Source\ue5_portfolio\Private\Items</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\Items\Weapons">
+      <UniqueIdentifier>{EAD4381C-1961-3511-8E91-323BB02311AA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\Items\Weapons\Weapon.cpp">
+      <Filter>Source\ue5_portfolio\Private\Items\Weapons</Filter>
+    </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Public">
+      <UniqueIdentifier>{682E7E44-716E-39C3-9938-9F62C60791D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ue5_portfolio\Public\AI">
+      <UniqueIdentifier>{9C691675-10A7-3479-B1FD-533F4B32E659}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\AI\EnemyAIController.h">
+      <Filter>Source\ue5_portfolio\Public\AI</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Breakable">
+      <UniqueIdentifier>{BF0A7A76-090E-3FB1-BFC6-5D89D5910131}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Breakable\BreakableActor.h">
+      <Filter>Source\ue5_portfolio\Public\Breakable</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Character">
+      <UniqueIdentifier>{DB506925-3F1F-369E-8797-D1A218DF4B5D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Character\GreatSwordAnimInstance.h">
+      <Filter>Source\ue5_portfolio\Public\Character</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Characters">
+      <UniqueIdentifier>{E01F798F-1720-3474-9335-39BA09541F07}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Characters\BaseCharacter.h">
+      <Filter>Source\ue5_portfolio\Public\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Characters\CharacterTypes.h">
+      <Filter>Source\ue5_portfolio\Public\Characters</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Components">
+      <UniqueIdentifier>{9717220E-A215-3F32-A8FF-FF5FD12A4D25}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Components\AttributeComponent.h">
+      <Filter>Source\ue5_portfolio\Public\Components</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Enemy">
+      <UniqueIdentifier>{1520BA15-C69A-32EB-B497-30B3669A02E8}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Enemy\Enemy.h">
+      <Filter>Source\ue5_portfolio\Public\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Enemy\EnemyBoss.h">
+      <Filter>Source\ue5_portfolio\Public\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Enemy\GruxBase.h">
+      <Filter>Source\ue5_portfolio\Public\Enemy</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\HUD">
+      <UniqueIdentifier>{34CF822C-073E-3A82-9F12-7C5D5B28111D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\HUD\HealthBar.h">
+      <Filter>Source\ue5_portfolio\Public\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\HUD\HealthBarComponent.h">
+      <Filter>Source\ue5_portfolio\Public\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\HUD\PlayerHUD.h">
+      <Filter>Source\ue5_portfolio\Public\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\HUD\PlayerOverlay.h">
+      <Filter>Source\ue5_portfolio\Public\HUD</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Interfaces">
+      <UniqueIdentifier>{52FF5573-E1EC-31DE-92E3-57A3EC624C97}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Interfaces\HitInterface.h">
+      <Filter>Source\ue5_portfolio\Public\Interfaces</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Items">
+      <UniqueIdentifier>{409A00EF-CA92-31FD-9115-CC2DB9B6FE09}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Items\Item.h">
+      <Filter>Source\ue5_portfolio\Public\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Items\Treasure.h">
+      <Filter>Source\ue5_portfolio\Public\Items</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\Items\Weapons">
+      <UniqueIdentifier>{82C55BE2-3749-3AA8-8D53-139E620E6C9A}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\Items\Weapons\Weapon.h">
+      <Filter>Source\ue5_portfolio\Public\Items\Weapons</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

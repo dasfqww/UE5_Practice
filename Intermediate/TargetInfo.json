@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "ue5_portfolio",
+			"Path": "C:\\Unreal5\\UE5_Practice\\Source\\ue5_portfolio.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "ue5_portfolioEditor",
+			"Path": "C:\\Unreal5\\UE5_Practice\\Source\\ue5_portfolioEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

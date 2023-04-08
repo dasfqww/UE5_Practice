@@ -1,0 +1,26 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\enemy.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\ue5_portfolioeditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\development\\ue5_portfolio\\definitions.ue5_portfolio.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\enemy\\enemy.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\characters\\basecharacter.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\interfaces\\hitinterface.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\hitinterface.generated.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\characters\\charactertypes.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\basecharacter.generated.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\enemy.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

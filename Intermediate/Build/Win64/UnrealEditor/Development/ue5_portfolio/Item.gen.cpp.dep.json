@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\item.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\ue5_portfolioeditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\development\\ue5_portfolio\\definitions.ue5_portfolio.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\items\\item.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\item.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
