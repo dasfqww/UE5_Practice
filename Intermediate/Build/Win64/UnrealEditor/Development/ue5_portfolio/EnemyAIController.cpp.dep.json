@@ -46,7 +46,20 @@
             "d:\\ue_5.1\\engine\\source\\runtime\\engine\\public\\visuallogger\\visualloggerdebugsnapshotinterface.h",
             "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\visualloggerdebugsnapshotinterface.generated.h",
             "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\aimodule\\uht\\aicontroller.generated.h",
-            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\enemyaicontroller.generated.h"
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\enemyaicontroller.generated.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\enemy\\enemyboss.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\characters\\basecharacter.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "d:\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "d:\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\interfaces\\hitinterface.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\hitinterface.generated.h",
+            "c:\\unreal5\\ue5_practice\\source\\ue5_portfolio\\public\\characters\\charactertypes.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\basecharacter.generated.h",
+            "c:\\unreal5\\ue5_practice\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_portfolio\\uht\\enemyboss.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

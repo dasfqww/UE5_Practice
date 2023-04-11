@@ -14,4 +14,6 @@ class UE5_PORTFOLIO_API AEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+protected:
+	virtual void OnPossess(APawn* InPawn) override;
 };

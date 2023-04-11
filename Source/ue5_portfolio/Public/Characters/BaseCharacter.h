@@ -38,8 +38,8 @@ protected:
 	virtual void HandleDamage(float DamageAmount);
 	virtual bool CanAttack();
 	void DisableCapsule();
-	bool isAlive();
 	void DisableMeshCollision();
+	bool isAlive();
 	void PlayHitReactMontage(const FName& SectionName);
 
 	virtual int32 PlayDeathMontage();

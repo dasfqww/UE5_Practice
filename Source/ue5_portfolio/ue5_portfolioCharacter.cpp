@@ -125,7 +125,7 @@ void Aue5_portfolioCharacter::GetHit_Implementation(const FVector& impactPoint, 
 	SetWeaponCollisionEnabled(ECollisionEnabled::NoCollision);
 	if (Attributes&&Attributes->GetHealthRatio()>0.f)
 	{
-		//ActionState = EActionState::EAS_HitReaction;
+		ActionState = EActionState::EAS_HitReaction;
 	}
 }
 

@@ -1,6 +1,10 @@
 ﻿  Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" ue5_portfolioEditor Win64 Development -Project="C:\Unreal5\UE5_Practice\ue5_portfolio.uproject" -WaitMutex -FromMsBuild
   Log file: C:\Users\조성민\AppData\Local\UnrealBuildTool\Log.txt
   Using 'git status' to determine working set for adaptive non-unity build (C:\Unreal5\UE5_Practice).
+  Parsing headers for ue5_portfolioEditor
+    Running Internal UnrealHeaderTool C:\Unreal5\UE5_Practice\ue5_portfolio.uproject C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\ue5_portfolioEditor\Development\ue5_portfolioEditor.uhtmanifest -WarningsAsErrors -installed
+  Total of 3 written
+  Reflection code generated for ue5_portfolioEditor in 2.5373628 seconds
   Building ue5_portfolioEditor...
   Using Visual Studio 2022 14.34.31937 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933) and Windows 10.0.18362.0 SDK (C:\Program Files (x86)\Windows Kits\10).
   [Upgrade]
@@ -11,13 +15,17 @@
   [Upgrade]
   Determining max actions to execute in parallel (4 physical cores, 8 logical cores)
     Executing up to 4 processes, one per physical core
-    Requested 1.5 GB free memory per action, 5.42 GB available: limiting max parallel actions to 3
-  Building 4 actions with 3 processes...
-  [1/4] Compile GruxBase.cpp
-  [2/4] Link UnrealEditor-ue5_portfolio-0004.lib
-     C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0004.lib 라이브러리 및 C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0004.exp 개체를 생성하고 있습니다.
-  [3/4] Link UnrealEditor-ue5_portfolio-0004.dll
-     C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0004.suppressed.lib 라이브러리 및 C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0004.suppressed.exp 개체를 생성하고 있습니다.
-  [4/4] WriteMetadata ue5_portfolioEditor.target
-  Total time in Parallel executor: 4.62 seconds
-  Total execution time: 6.13 seconds
+    Requested 1.5 GB free memory per action, 4.78 GB available: limiting max parallel actions to 3
+  Building 8 actions with 3 processes...
+  [1/8] Compile ue5_portfolio.init.gen.cpp
+  [2/8] Compile EnemyBoss.gen.cpp
+  [3/8] Compile EnemyAIController.cpp
+  [4/8] Compile EnemyAIController.gen.cpp
+  [5/8] Compile EnemyBoss.cpp
+  [6/8] Link UnrealEditor-ue5_portfolio-0024.lib
+     C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0024.lib 라이브러리 및 C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0024.exp 개체를 생성하고 있습니다.
+  [7/8] Link UnrealEditor-ue5_portfolio-0024.dll
+     C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0024.suppressed.lib 라이브러리 및 C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio-0024.suppressed.exp 개체를 생성하고 있습니다.
+  [8/8] WriteMetadata ue5_portfolioEditor.target
+  Total time in Parallel executor: 18.54 seconds
+  Total execution time: 23.08 seconds

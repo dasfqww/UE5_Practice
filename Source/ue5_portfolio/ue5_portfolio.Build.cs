@@ -8,7 +8,9 @@ public class ue5_portfolio : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", 
-			"CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "GeometryCollectionEngine", "UMG", "AIModule" });
+		PublicDependencyModuleNames.AddRange(new string[] 
+		{ "Core", "CoreUObject", "Engine", "InputCore", 
+			"HeadMountedDisplay", "GeometryCollectionEngine", 
+			"UMG", "AIModule", "GameplayTasks", "NavigationSystem" });
 	}
 }

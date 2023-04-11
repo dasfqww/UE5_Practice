@@ -72,6 +72,12 @@
     <ClCompile Include="..\..\Source\ue5_portfolio\Private\AI\EnemyAIController.cpp">
       <Filter>Source\ue5_portfolio\Private\AI</Filter>
     </ClCompile>
+    <Filter Include="Source\ue5_portfolio\Private\AI\Tasks">
+      <UniqueIdentifier>{1CB5F8AC-2B90-3192-8B61-01DE60F3DB8E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\ue5_portfolio\Private\AI\Tasks\NextLocationTask.cpp">
+      <Filter>Source\ue5_portfolio\Private\AI\Tasks</Filter>
+    </ClCompile>
     <Filter Include="Source\ue5_portfolio\Private\Breakable">
       <UniqueIdentifier>{7A43E04F-E76E-35D9-BB1C-3DCFC90D7D72}</UniqueIdentifier>
     </Filter>
@@ -152,6 +158,12 @@
     </Filter>
     <ClInclude Include="..\..\Source\ue5_portfolio\Public\AI\EnemyAIController.h">
       <Filter>Source\ue5_portfolio\Public\AI</Filter>
+    </ClInclude>
+    <Filter Include="Source\ue5_portfolio\Public\AI\Tasks">
+      <UniqueIdentifier>{37E7B966-7518-3B45-A255-E7ED09C3032D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\ue5_portfolio\Public\AI\Tasks\NextLocationTask.h">
+      <Filter>Source\ue5_portfolio\Public\AI\Tasks</Filter>
     </ClInclude>
     <Filter Include="Source\ue5_portfolio\Public\Breakable">
       <UniqueIdentifier>{BF0A7A76-090E-3FB1-BFC6-5D89D5910131}</UniqueIdentifier>
