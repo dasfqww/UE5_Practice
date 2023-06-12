@@ -11,9 +11,13 @@
 #include "Components/AttributeComponent.h"
 #include "Items/Item.h"
 #include "Items/Weapons/Weapon.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 #include "Animation/AnimMontage.h"
 #include "HUD/PlayerHUD.h"
 #include "HUD/PlayerOverlay.h"
+#include "Kismet/KismetMathLibrary.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Aue5_portfolioCharacter
@@ -61,6 +65,28 @@ Aue5_portfolioCharacter::Aue5_portfolioCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	// Input
+	/*ConstructorHelpers::FObjectFinder<UInputMappingContext> MappingContext(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Input/IMC_Default.IMC_Default'"));
+	if (MappingContext.Succeeded())
+		InputMappingContext = MappingContext.Object;
+	
+	ConstructorHelpers::FObjectFinder<UInputAction> MoveAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Move.IA_Move'"));
+	if (MoveAsset.Succeeded())
+		MoveAction = MoveAsset.Object;
+
+	ConstructorHelpers::FObjectFinder<UInputAction> TurnAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Turn.IA_Turn'"));
+	if (TurnAsset.Succeeded())
+		TurnAction = TurnAsset.Object;
+	
+	ConstructorHelpers::FObjectFinder<UInputAction> LookAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Look.IA_Look'"));
+	if (LookAsset.Succeeded())
+		LookAction = LookAsset.Object;
+	
+	ConstructorHelpers::FObjectFinder<UInputAction> JumpAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Jump.IA_Jump'"));
+	if (LookAsset.Succeeded())
+		JumpAction = JumpAsset.Object;*/
+	
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -71,23 +97,37 @@ Aue5_portfolioCharacter::Aue5_portfolioCharacter()
 void Aue5_portfolioCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
-	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &Aue5_portfolioCharacter::Jump);
-	PlayerInputComponent->BindAction("Interact", IE_Released, this, 
-		&Aue5_portfolioCharacter::InteractKeyPressed);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, 
-		&Aue5_portfolioCharacter::Attack);
+	//check(PlayerInputComponent);
+	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &Aue5_portfolioCharacter::Jump);
+	//PlayerInputComponent->BindAction("Interact", IE_Released, this, 
+	//	&Aue5_portfolioCharacter::InteractKeyPressed);
+	//PlayerInputComponent->BindAction("Attack", IE_Released, this, 
+	//	&Aue5_portfolioCharacter::Attack);
 
-	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &Aue5_portfolioCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("Move Right / Left", this, &Aue5_portfolioCharacter::MoveRight);
+	//PlayerInputComponent->BindAxis("Move Forward / Backward", this, &Aue5_portfolioCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("Move Right / Left", this, &Aue5_portfolioCharacter::MoveRight);
 
-	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
-	// "turn" handles devices that provide an absolute delta, such as a mouse.
-	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
-	//PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &Aue5_portfolioCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
+	//// We have 2 versions of the rotation bindings to handle different kinds of devices differently
+	//// "turn" handles devices that provide an absolute delta, such as a mouse.
+	//// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
+	//PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
+	////PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &Aue5_portfolioCharacter::TurnAtRate);
+	//PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
 	//PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &Aue5_portfolioCharacter::LookUpAtRate);
+
+	//if (auto* EnhancedInputComponent=Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	//{
+	//	EnhancedInputComponent->BindAction
+	//		(MoveAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Move);
+	//	EnhancedInputComponent->BindAction
+	//		(TurnAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Turn);
+	//	EnhancedInputComponent->BindAction
+	//		(LookAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Look);
+	//	EnhancedInputComponent->BindAction
+	//		(JumpAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::Jump);
+	//	EnhancedInputComponent->BindAction
+	//		(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+	//}
 
 	// handle touch devices
 	/*PlayerInputComponent->BindTouch(IE_Pressed, this, &Aue5_portfolioCharacter::TouchStarted);
@@ -133,6 +173,19 @@ void Aue5_portfolioCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
+	/*APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	if (PlayerController)
+	{
+		auto* SubSystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>
+			(PlayerController->GetLocalPlayer());
+		if (SubSystem)
+		{
+			SubSystem->AddMappingContext(InputMappingContext, 0);
+		}
+	}*/
+
 	Tags.Add(FName("EngageableTarget"));
 
 	InitializePlayerOverlay();
@@ -173,7 +226,6 @@ void Aue5_portfolioCharacter::SetHUDHealth()
 //{
 //	StopJumping();
 //}
-
 
 
 void Aue5_portfolioCharacter::InteractKeyPressed()
@@ -353,35 +405,68 @@ void Aue5_portfolioCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
-void Aue5_portfolioCharacter::MoveForward(float Value)
-{
-	if (ActionState != EActionState::EAS_Unoccupied) return;
+//void Aue5_portfolioCharacter::IA_Move(const FInputActionValue& Value)
+//{
+//	if (ActionState != EActionState::EAS_Unoccupied) return;
+//
+//	FVector2D MovementVector = Value.Get<FVector2D>();
+//
+//	if (MovementVector.X!=0)
+//	{
+//		FRotator Rotator = GetControlRotation();
+//		FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0, Rotator.Yaw, 0));
+//		AddMovementInput(Direction, MovementVector.X);
+//	}
+//	
+//	if (MovementVector.Y!=0)
+//	{
+//		FRotator Rotator = GetControlRotation();
+//		FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0, Rotator.Yaw, 0));
+//		AddMovementInput(Direction, MovementVector.Y);
+//	}
+//}
 
-	if ((Controller != nullptr) && (Value != 0.0f))
-	{
-		// find out which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+//void Aue5_portfolioCharacter::IA_Turn(const FInputActionValue& Value)
+//{
+//	float Val = Value.Get<float>();
+//	AddControllerYawInput(Val);
+//}
 
-		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, Value);
-	}
-}
+//void Aue5_portfolioCharacter::IA_Look(const FInputActionValue& Value)
+//{
+//	float Val = Value.Get<float>();
+//	AddControllerPitchInput(Val);
+//}
 
-void Aue5_portfolioCharacter::MoveRight(float Value)
-{
-	if (ActionState != EActionState::EAS_Unoccupied) return;
-
-	if ( (Controller != nullptr) && (Value != 0.0f) )
-	{
-		// find out which way is right
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
-		AddMovementInput(Direction, Value);
-	}
-}
+//void Aue5_portfolioCharacter::MoveForward(float Value)
+//{
+//	if (ActionState != EActionState::EAS_Unoccupied) return;
+//
+//	if ((Controller != nullptr) && (Value != 0.0f))
+//	{
+//		// find out which way is forward
+//		const FRotator Rotation = Controller->GetControlRotation();
+//		const FRotator YawRotation(0, Rotation.Yaw, 0);
+//
+//		// get forward vector
+//		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+//		AddMovementInput(Direction, Value);
+//	}
+//}
+//
+//void Aue5_portfolioCharacter::MoveRight(float Value)
+//{
+//	if (ActionState != EActionState::EAS_Unoccupied) return;
+//
+//	if ( (Controller != nullptr) && (Value != 0.0f) )
+//	{
+//		// find out which way is right
+//		const FRotator Rotation = Controller->GetControlRotation();
+//		const FRotator YawRotation(0, Rotation.Yaw, 0);
+//	
+//		// get right vector 
+//		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+//		// add movement in that direction
+//		AddMovementInput(Direction, Value);
+//	}
+//}

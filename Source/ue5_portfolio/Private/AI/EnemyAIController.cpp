@@ -3,6 +3,14 @@
 
 #include "AI/EnemyAIController.h"
 #include "Enemy/EnemyBoss.h"
+#include "Components/EnemyAIPerceptionComponent.h"
+
+AEnemyAIController::AEnemyAIController()
+{
+	EnemyAIPerceptionComponent = 
+		CreateDefaultSubobject<UEnemyAIPerceptionComponent>(TEXT("EnemyPerceptionComponent"));
+	SetPerceptionComponent(*EnemyAIPerceptionComponent);
+}
 
 void AEnemyAIController::OnPossess(APawn* InPawn)
 {
