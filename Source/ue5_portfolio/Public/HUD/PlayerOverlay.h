@@ -14,9 +14,12 @@ class UE5_PORTFOLIO_API UPlayerOverlay : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	
 
 	void SetHealthBarRatio(float ratio);
 	void SetManaBarRatio(float ratio);
+	void SetHealthText();
+	FString GetHealthStatText();
 
 private:
 	UPROPERTY(meta=(BindWidget))
@@ -24,4 +27,7 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* ManaBar;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* HealthStatText;
 };

@@ -94,4 +94,5 @@ private:
 	TArray<FName> deathMontageSections;
 public:
 	FORCEINLINE EDeathPose GetDeathPose() const { return DeathPose; }
+	FORCEINLINE UAttributeComponent* GetAttributeComponent() const { return Attributes; }
 };

@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Unreal5\\UE5_Practice\\Source\\ue5_portfolio\\ue5_portfolio.Build.cs",
+		"C:\\Unreal5\\UE5_Practice\\Source\\ue5_portfolio.Target.cs",
+		"C:\\Unreal5\\UE5_Practice\\Source\\ue5_portfolioEditor.Target.cs"
+	],
+	"EngineVersion": "5.2.1"
+}

@@ -28,7 +28,7 @@ public:
 	float GroundSpeed;
 	
 	UPROPERTY(BlueprintReadOnly, Category=Movement)
-	bool isFalling;
+	bool bIsFalling;
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;

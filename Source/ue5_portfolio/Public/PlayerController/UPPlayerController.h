@@ -37,12 +37,20 @@ public:
 	void IA_Look(const FInputActionValue& Value);
 
 	UFUNCTION()
-	void Jump();
+	void IA_Jump();
 	
+	UFUNCTION()
+	void IA_DefaultAttack();
+	
+	UFUNCTION()
+	void IA_Interact();
+
+	//void CastToPlayer();
+
 	/*UFUNCTION()
 	void StopJumping();*/
 protected:
-
+	
 private:
 	UPROPERTY()
 	TObjectPtr<class Aue5_portfolioCharacter> PlayerCharacter;
@@ -61,6 +69,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> LookAction;
+	
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> DefaultAttackAction;
+	
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> InteractAction;
 
 	UPROPERTY(VisibleAnywhere, Category = State)
 	EActionState ActionState;

@@ -18,6 +18,7 @@
 #include "HUD/PlayerHUD.h"
 #include "HUD/PlayerOverlay.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "DataAssets/UPComboActionData.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Aue5_portfolioCharacter
@@ -64,31 +65,6 @@ Aue5_portfolioCharacter::Aue5_portfolioCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	// Input
-	/*ConstructorHelpers::FObjectFinder<UInputMappingContext> MappingContext(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Input/IMC_Default.IMC_Default'"));
-	if (MappingContext.Succeeded())
-		InputMappingContext = MappingContext.Object;
-	
-	ConstructorHelpers::FObjectFinder<UInputAction> MoveAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Move.IA_Move'"));
-	if (MoveAsset.Succeeded())
-		MoveAction = MoveAsset.Object;
-
-	ConstructorHelpers::FObjectFinder<UInputAction> TurnAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Turn.IA_Turn'"));
-	if (TurnAsset.Succeeded())
-		TurnAction = TurnAsset.Object;
-	
-	ConstructorHelpers::FObjectFinder<UInputAction> LookAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Look.IA_Look'"));
-	if (LookAsset.Succeeded())
-		LookAction = LookAsset.Object;
-	
-	ConstructorHelpers::FObjectFinder<UInputAction> JumpAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Jump.IA_Jump'"));
-	if (LookAsset.Succeeded())
-		JumpAction = JumpAsset.Object;*/
-	
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -96,42 +72,7 @@ Aue5_portfolioCharacter::Aue5_portfolioCharacter()
 
 void Aue5_portfolioCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-	// Set up gameplay key bindings
-	//check(PlayerInputComponent);
-	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &Aue5_portfolioCharacter::Jump);
-	//PlayerInputComponent->BindAction("Interact", IE_Released, this, 
-	//	&Aue5_portfolioCharacter::InteractKeyPressed);
-	//PlayerInputComponent->BindAction("Attack", IE_Released, this, 
-	//	&Aue5_portfolioCharacter::Attack);
-
-	//PlayerInputComponent->BindAxis("Move Forward / Backward", this, &Aue5_portfolioCharacter::MoveForward);
-	//PlayerInputComponent->BindAxis("Move Right / Left", this, &Aue5_portfolioCharacter::MoveRight);
-
-	//// We have 2 versions of the rotation bindings to handle different kinds of devices differently
-	//// "turn" handles devices that provide an absolute delta, such as a mouse.
-	//// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	//PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
-	////PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &Aue5_portfolioCharacter::TurnAtRate);
-	//PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
-	//PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &Aue5_portfolioCharacter::LookUpAtRate);
-
-	//if (auto* EnhancedInputComponent=Cast<UEnhancedInputComponent>(PlayerInputComponent))
-	//{
-	//	EnhancedInputComponent->BindAction
-	//		(MoveAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Move);
-	//	EnhancedInputComponent->BindAction
-	//		(TurnAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Turn);
-	//	EnhancedInputComponent->BindAction
-	//		(LookAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::IA_Look);
-	//	EnhancedInputComponent->BindAction
-	//		(JumpAction, ETriggerEvent::Triggered, this, &Aue5_portfolioCharacter::Jump);
-	//	EnhancedInputComponent->BindAction
-	//		(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	//}
-
-	// handle touch devices
-	/*PlayerInputComponent->BindTouch(IE_Pressed, this, &Aue5_portfolioCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &Aue5_portfolioCharacter::TouchStopped);*/
+	
 }
 
 void Aue5_portfolioCharacter::Jump()
@@ -173,19 +114,6 @@ void Aue5_portfolioCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
-	/*APlayerController* PlayerController = Cast<APlayerController>(Controller);
-	if (PlayerController)
-	{
-		auto* SubSystem =
-			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>
-			(PlayerController->GetLocalPlayer());
-		if (SubSystem)
-		{
-			SubSystem->AddMappingContext(InputMappingContext, 0);
-		}
-	}*/
-
 	Tags.Add(FName("EngageableTarget"));
 
 	InitializePlayerOverlay();
@@ -204,6 +132,7 @@ void Aue5_portfolioCharacter::InitializePlayerOverlay()
 			{
 				PlayerOverlay->SetHealthBarRatio(Attributes->GetHealthRatio());
 				PlayerOverlay->SetManaBarRatio(1.f);
+				PlayerOverlay->SetHealthText();
 			}
 		}
 	}
@@ -217,19 +146,10 @@ void Aue5_portfolioCharacter::SetHUDHealth()
 	}
 }
 
-//void Aue5_portfolioCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-//{
-//	Jump();
-//}
-//
-//void Aue5_portfolioCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-//{
-//	StopJumping();
-//}
-
-
 void Aue5_portfolioCharacter::InteractKeyPressed()
 {
+	UE_LOG(LogTemp, Warning, TEXT("interact.."));
+
 	AWeapon* overlappingWeapon = Cast<AWeapon>(overlappingItem);
 	if (overlappingWeapon)
 	{
@@ -254,7 +174,9 @@ void Aue5_portfolioCharacter::Attack()
 {
 	if(CanAttack())
 	{
+		HasNextComboCommand = true;
 		DefaultAttack();
+		//ProcessComboCommand();
 		ActionState = EActionState::EAS_Attacking;
 	}
 
@@ -271,13 +193,13 @@ void Aue5_portfolioCharacter::HitReaction()
 
 void Aue5_portfolioCharacter::DefaultAttack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Count:%d"), comboCount);
+	UE_LOG(LogTemp, Warning, TEXT("Count:%d"), CurrentCombo);
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (AnimInstance && attackMontage)
 	{
 		//AnimInstance->Montage_Play(attackMontage);
-		const char* sectionList[] = { "Attack", "Attack2", "Attack3" };
+		const char* sectionList[] = { "Attack1", "Attack2", "Attack3" };
 
 		if (!(AnimInstance->Montage_IsPlaying(attackMontage)))
 		{
@@ -287,21 +209,96 @@ void Aue5_portfolioCharacter::DefaultAttack()
 		else if (AnimInstance->Montage_IsPlaying(attackMontage))
 		{
 			AnimInstance->Montage_Play(attackMontage);
-			AnimInstance->Montage_JumpToSection(FName(sectionList[comboCount]), attackMontage);
+			AnimInstance->Montage_JumpToSection(FName(sectionList[CurrentCombo]), attackMontage);
 		}
+	}
+}
+
+void Aue5_portfolioCharacter::ProcessComboCommand()
+{
+	if (CurrentCombo==0)
+	{
+		ComboActionBegin();
+		return;
+	}
+
+	if (!ComboTimerHandle.IsValid())
+	{
+		HasNextComboCommand = false;
+	}
+	else
+	{
+		HasNextComboCommand = true;
+	}
+}
+
+void Aue5_portfolioCharacter::ComboActionBegin()
+{
+	CurrentCombo = 1;
+
+	ActionState = EActionState::EAS_Attacking;
+
+	const float AttackSpeedRate = 1.f;
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	AnimInstance->Montage_Play(attackMontage, AttackSpeedRate);
+
+	FOnMontageEnded EndDelegate;
+	EndDelegate.BindUObject(this, &Aue5_portfolioCharacter::ComboActionEnd);
+	AnimInstance->Montage_SetEndDelegate(EndDelegate, attackMontage);
+
+	ComboTimerHandle.Invalidate();
+	SetComboCheckTimer();
+}
+
+void Aue5_portfolioCharacter::ComboActionEnd(UAnimMontage* TargetMontage, bool IsProperlyEnded)
+{
+	ensure(CurrentCombo != 0);
+	CurrentCombo = 0;
+}
+
+void Aue5_portfolioCharacter::SetComboCheckTimer()
+{
+	int32 ComboIndex = CurrentCombo - 1;
+	ensure(ComboActionData->EffectiveFrameCount.IsValidIndex(ComboIndex));
+
+	const float AttackSpeedRate = 1.f;
+	float ComboEffectiveTime =
+		(ComboActionData->EffectiveFrameCount[ComboIndex] / ComboActionData->FrameRate) 
+			/ AttackSpeedRate;
+	if (ComboEffectiveTime>0.f)
+	{
+		GetWorld()->GetTimerManager().SetTimer
+			(ComboTimerHandle, this, &Aue5_portfolioCharacter::ComboCheck, 
+				ComboEffectiveTime, false);
+	}
+}
+
+void Aue5_portfolioCharacter::ComboCheck()
+{
+	ComboTimerHandle.Invalidate();
+	if (HasNextComboCommand)
+	{
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+
+		CurrentCombo = FMath::Clamp(CurrentCombo + 1, 1, ComboActionData->MaxComboCount);
+		FName NextSection = *FString::Printf(TEXT("%s%d"),
+				*ComboActionData->MontageSectionNamePrefix, CurrentCombo);
+		AnimInstance->Montage_JumpToSection(NextSection, attackMontage);
+		SetComboCheckTimer();
+		HasNextComboCommand = false;
 	}
 }
 
 void Aue5_portfolioCharacter::AttackInputChecking()
 {
-	if (comboCount>=2)
+	if (CurrentCombo>=2)
 	{
-		comboCount = 0;
+		CurrentCombo = 0;
 	}
 
 	if (bCanNextAttack)
 	{
-		comboCount++;
+		CurrentCombo++;
 		bCanNextAttack = false;
 		DefaultAttack();
 	}
@@ -321,7 +318,7 @@ void Aue5_portfolioCharacter::EquipWeapon(AWeapon* Weapon)
 void Aue5_portfolioCharacter::AttackEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
-	comboCount = 0;
+	CurrentCombo = 0;
 }
 
 bool Aue5_portfolioCharacter::CanAttack()
@@ -404,69 +401,3 @@ void Aue5_portfolioCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 }
-
-//void Aue5_portfolioCharacter::IA_Move(const FInputActionValue& Value)
-//{
-//	if (ActionState != EActionState::EAS_Unoccupied) return;
-//
-//	FVector2D MovementVector = Value.Get<FVector2D>();
-//
-//	if (MovementVector.X!=0)
-//	{
-//		FRotator Rotator = GetControlRotation();
-//		FVector Direction = UKismetMathLibrary::GetForwardVector(FRotator(0, Rotator.Yaw, 0));
-//		AddMovementInput(Direction, MovementVector.X);
-//	}
-//	
-//	if (MovementVector.Y!=0)
-//	{
-//		FRotator Rotator = GetControlRotation();
-//		FVector Direction = UKismetMathLibrary::GetRightVector(FRotator(0, Rotator.Yaw, 0));
-//		AddMovementInput(Direction, MovementVector.Y);
-//	}
-//}
-
-//void Aue5_portfolioCharacter::IA_Turn(const FInputActionValue& Value)
-//{
-//	float Val = Value.Get<float>();
-//	AddControllerYawInput(Val);
-//}
-
-//void Aue5_portfolioCharacter::IA_Look(const FInputActionValue& Value)
-//{
-//	float Val = Value.Get<float>();
-//	AddControllerPitchInput(Val);
-//}
-
-//void Aue5_portfolioCharacter::MoveForward(float Value)
-//{
-//	if (ActionState != EActionState::EAS_Unoccupied) return;
-//
-//	if ((Controller != nullptr) && (Value != 0.0f))
-//	{
-//		// find out which way is forward
-//		const FRotator Rotation = Controller->GetControlRotation();
-//		const FRotator YawRotation(0, Rotation.Yaw, 0);
-//
-//		// get forward vector
-//		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-//		AddMovementInput(Direction, Value);
-//	}
-//}
-//
-//void Aue5_portfolioCharacter::MoveRight(float Value)
-//{
-//	if (ActionState != EActionState::EAS_Unoccupied) return;
-//
-//	if ( (Controller != nullptr) && (Value != 0.0f) )
-//	{
-//		// find out which way is right
-//		const FRotator Rotation = Controller->GetControlRotation();
-//		const FRotator YawRotation(0, Rotation.Yaw, 0);
-//	
-//		// get right vector 
-//		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-//		// add movement in that direction
-//		AddMovementInput(Direction, Value);
-//	}
-//}

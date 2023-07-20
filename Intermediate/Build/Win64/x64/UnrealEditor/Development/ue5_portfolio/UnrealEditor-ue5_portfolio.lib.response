@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-ue5_portfolio.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\x64\ue5_portfolioEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\x64\UnrealEditor\Development\ue5_portfolio\Module.ue5_portfolio.cpp.obj"
+"C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\x64\UnrealEditor\Development\ue5_portfolio\Default.rc2.res"
+/OUT:"C:\Unreal5\UE5_Practice\Intermediate\Build\Win64\x64\UnrealEditor\Development\ue5_portfolio\UnrealEditor-ue5_portfolio.lib"

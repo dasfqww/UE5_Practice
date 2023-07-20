@@ -32,13 +32,20 @@ AUPPlayerController::AUPPlayerController()
 	ConstructorHelpers::FObjectFinder<UInputAction> JumpAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Jump.IA_Jump'"));
 	if (LookAsset.Succeeded())
 		JumpAction = JumpAsset.Object;
+	
+	ConstructorHelpers::FObjectFinder<UInputAction> DefaultAttackAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_DefaultAttack.IA_DefaultAttack'"));
+	if (DefaultAttackAsset.Succeeded())
+		DefaultAttackAction = DefaultAttackAsset.Object;
+	
+	ConstructorHelpers::FObjectFinder<UInputAction> InteractAsset(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Interact.IA_Interact'"));
+	if (InteractAsset.Succeeded())
+		InteractAction = InteractAsset.Object;
 }
 
 void AUPPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
 	// EnhancedInput
 	auto* SubSystem =
 		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
@@ -47,7 +54,7 @@ void AUPPlayerController::BeginPlay()
 		SubSystem->AddMappingContext(InputMappingContext, 0);
 	}
 	
-	Aue5_portfolioCharacter* playerCharacter = 
+	Aue5_portfolioCharacter* playerCharacter =
 		Cast<Aue5_portfolioCharacter>(PlayerCharacter);
 	if (playerCharacter)
 	{
@@ -65,16 +72,24 @@ void AUPPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	if (auto* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
+	if (UEnhancedInputComponent* EnhancedInputComponent = 
+			Cast<UEnhancedInputComponent>(InputComponent))
 	{		
 		EnhancedInputComponent->BindAction
-		(MoveAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Move);
+			(MoveAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Move);
 		EnhancedInputComponent->BindAction
-		(TurnAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Turn);
+			(TurnAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Turn);
 		EnhancedInputComponent->BindAction
-		(LookAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Look);
+			(LookAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Look);
 		EnhancedInputComponent->BindAction
-			(JumpAction, ETriggerEvent::Triggered, this, &AUPPlayerController::Jump);
+			(JumpAction, ETriggerEvent::Triggered, this, &AUPPlayerController::IA_Jump);
+		EnhancedInputComponent->BindAction
+			(DefaultAttackAction, ETriggerEvent::Triggered, this, 
+				&AUPPlayerController::IA_DefaultAttack);
+		EnhancedInputComponent->BindAction
+			(InteractAction, ETriggerEvent::Triggered, this,
+				&AUPPlayerController::IA_Interact);
+		
 		/*EnhancedInputComponent->BindAction
 			(JumpAction, ETriggerEvent::Completed, this, &AUPPlayerController::StopJumping);*/
 	}
@@ -113,9 +128,29 @@ void AUPPlayerController::IA_Look(const FInputActionValue& Value)
 	GetPawn()->AddControllerPitchInput(Val);
 }
 
-void AUPPlayerController::Jump()
+void AUPPlayerController::IA_Jump()
 {
 	GetCharacter()->Jump();
+}
+
+void AUPPlayerController::IA_DefaultAttack()
+{
+	Aue5_portfolioCharacter* playerCharacter =
+		Cast<Aue5_portfolioCharacter>(GetCharacter());
+	if (playerCharacter)
+	{
+		playerCharacter->Attack();
+	}
+}
+
+void AUPPlayerController::IA_Interact()
+{
+	Aue5_portfolioCharacter* playerCharacter =
+		Cast<Aue5_portfolioCharacter>(GetCharacter());
+	if (playerCharacter)
+	{
+		playerCharacter->InteractKeyPressed();
+	}
 }
 
 //void AUPPlayerController::StopJumping()
